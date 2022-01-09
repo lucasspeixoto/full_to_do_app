@@ -1,27 +1,36 @@
 <h1 align="center">
-   Template React, TypeScript e Material Ui
+   Agendamento de Tarefas
 </h1>
 
 <br>
 
 ## 💻 Projeto
 
-[Template](https://github.com/lucasspeixoto/template_react_typescript_material) É um projeto
-de estruturação de projetos com React, TypeScript e material ui entre outras tecnologias.
+Projeto para cadastro de tarefas com interface web (React) e mobile (React Native).
 
-## ✨ Objetivo
+- [x] MongoDB
+- [x] Express
+- [x] React
+- [x] NodeJS
 
-O Objetivo inicial foi a facilitação de inicio em projetos com as seguntes tecnologias
+## ✨ Tecnologias
 
-- [React](https://reactjs.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Material UI](https://mui.com/getting-started/usage/)
+Esse projeto foi desenvolvido com as seguintes tecnologias/bibliotecas:
 
-## 🚀 Instalação
+- [MongoDB](https://www.mongodb.com/)
+- [Express](https://expressjs.com/)
+- [React](https://reactjs.org/)
+- [NodeJS](https://nodejs.org/en/)
+
+## 🔖 Layout
+
+![caption](frontend/public/assets/presentation.gif)
+
+## 🚀 Instalação Frontend
 
 ```bash
 # Clone o repositório e entre na pasta do projeto
-$ git clone https://github.com/lucasspeixoto/template_react_typescript_material && cd template_react_typescript_material
+$ git clone https://github.com/lucasspeixoto/full_to_do_app && cd full_to_do_app/frontend
 
 # Instale as dependências
 $ npm install
@@ -34,6 +43,25 @@ $ npm start
 $ yarn start
 
 # Abra http://localhost:3000 no seu navegador para ver a aplicação rodando!
+
+```
+
+## 🚀 Instalação Backend
+
+```bash
+# Clone o repositório e entre na pasta do projeto
+$ git clone https://github.com/lucasspeixoto/full_to_do_app && cd full_to_do_app/backend
+
+# Instale as dependências
+$ npm install
+# ou
+$ yarn install
+
+# Execute a aplicação
+$ npm start
+# ou
+$ yarn start
+
 ```
 
 ## 📝 Licença
