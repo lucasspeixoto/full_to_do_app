@@ -6,12 +6,12 @@
 
 ## 💻 Projeto
 
-Projeto para cadastro de tarefas com interface web (React) e mobile (React Native).
+Projeto para cadastro de tarefas com base no MongoDB, backend em Node JS e interface web (React) e mobile (React Native).
 
-- [x] MongoDB
-- [x] Express
-- [x] React
-- [x] NodeJS
+- [M] MongoDB
+- [E] Express
+- [R] React
+- [N] NodeJS
 
 ## ✨ Tecnologias
 
