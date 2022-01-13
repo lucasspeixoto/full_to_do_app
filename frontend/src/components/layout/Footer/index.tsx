@@ -14,7 +14,7 @@ const FooterWrapper = styled(Box)(
     bottom: 0;
 		justify-content: space-between;
 		width: 100%;
-    border-top: 2px solid ${theme.footer.borderColor};;
+    border-top: 2px solid ${theme.footer.borderColor};
 `,
 );
 

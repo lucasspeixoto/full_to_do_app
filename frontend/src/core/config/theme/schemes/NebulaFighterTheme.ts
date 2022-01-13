@@ -1046,7 +1046,6 @@ export const NebulaFighterTheme = createTheme({
 					backgroundColor: '#aab4be',
 					borderRadius: 20 / 2,
 				},
-			
 			},
 		},
 		MuiStepper: {

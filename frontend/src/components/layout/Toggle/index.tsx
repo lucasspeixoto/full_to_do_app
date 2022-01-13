@@ -4,7 +4,6 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 
-
 /* const DarkLightThemeSwitch = styled(Switch)(({ theme }) => ({
 	
 	'& .MuiSwitch-switchBase': {

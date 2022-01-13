@@ -4,10 +4,9 @@ import { ThemeProvider } from '@mui/material';
 import { StylesProvider } from '@mui/styles';
 import { dartThemeCreator, lightThemeCreator } from '@core/config/theme/base';
 
-
 interface IThemeContext {
 	setThemeName(themeName: string): void;
-	themeName: string
+	themeName: string;
 }
 
 export const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
