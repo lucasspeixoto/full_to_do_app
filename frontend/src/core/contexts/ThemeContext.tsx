@@ -2,7 +2,8 @@ import React, { useMemo, useState, createContext } from 'react';
 import { ThemeProvider } from '@mui/material';
 
 import { StylesProvider } from '@mui/styles';
-import { dartThemeCreator, lightThemeCreator } from '../base';
+import { dartThemeCreator, lightThemeCreator } from '@core/config/theme/base';
+
 
 interface IThemeContext {
 	setThemeName(themeName: string): void;

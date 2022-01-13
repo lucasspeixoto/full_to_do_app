@@ -1,10 +1,8 @@
-import BaseLayout from '@components/layout/BaseLayout';
-import { Home } from '@pages/Home';
+import { appRoutes } from '@config/routes/routes';
+import { useRoutes } from 'react-router-dom';
 
-export const Routes: React.FC = () => {
-  return (
-    <BaseLayout>
-      <Home />
-    </BaseLayout>
-  );
+export const Routes = () => {
+	const app = useRoutes(appRoutes);
+
+	return app;
 };

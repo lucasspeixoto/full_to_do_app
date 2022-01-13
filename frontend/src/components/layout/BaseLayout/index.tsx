@@ -1,17 +1,40 @@
-import React, { ReactNode } from "react";
-import PropTypes from "prop-types";
-import { Outlet } from "react-router-dom";
+import React, { ReactNode } from 'react';
+import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
+import { Outlet } from 'react-router-dom';
+import { Header } from '../Header';
 
 interface BaseLayoutProps {
-  children?: ReactNode;
+	children?: ReactNode;
 }
 
-const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
-  return <>{children || <Outlet />}</>;
+const MainWrapper = styled(Box)(
+	({ theme }) => `
+		flex: 1 1 auto;
+		display: flex;
+		height: 100%;
+`,
+);
+
+const MainContent = styled(Box)(
+	({ theme }) => `
+		margin-top: ${theme.header.height};
+		flex: 1 1 auto;
+		overflow: auto;
+`,
+);
+
+const SidebarLayout: React.FC<BaseLayoutProps> = () => {
+	return (
+		<>
+			<MainWrapper>
+				<Header />
+				<MainContent>
+					<Outlet />
+				</MainContent>
+			</MainWrapper>
+		</>
+	);
 };
 
-BaseLayout.propTypes = {
-  children: PropTypes.node,
-};
-
-export default BaseLayout;
+export default SidebarLayout;

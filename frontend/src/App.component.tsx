@@ -2,7 +2,7 @@ import { CssBaseline } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
-import ThemeProviderWrapper from '@config/theme/schemes/ThemeProvider';
+import ThemeProviderWrapper from '@contexts/ThemeContext';
 
 import { Routes } from '@core/config/routes';
 
