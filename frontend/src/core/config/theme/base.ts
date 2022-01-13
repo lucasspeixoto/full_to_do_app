@@ -122,6 +122,14 @@ declare module '@mui/material/styles' {
 			background: React.CSSProperties['color'];
 			boxShadow: React.CSSProperties['color'];
 			textColor: React.CSSProperties['color'];
+			borderColor: React.CSSProperties['color'];
+		};
+		footer: {
+			height: string;
+			background: React.CSSProperties['color'];
+			boxShadow: React.CSSProperties['color'];
+			textColor: React.CSSProperties['color'];
+			borderColor: React.CSSProperties['color'];
 		};
 	}
 
@@ -235,6 +243,14 @@ declare module '@mui/material/styles' {
 			background: React.CSSProperties['color'];
 			boxShadow: React.CSSProperties['color'];
 			textColor: React.CSSProperties['color'];
+			borderColor: React.CSSProperties['color'];
+		};
+		footer: {
+			height: string;
+			background: React.CSSProperties['color'];
+			boxShadow: React.CSSProperties['color'];
+			textColor: React.CSSProperties['color'];
+			borderColor: React.CSSProperties['color'];
 		};
 	}
 }

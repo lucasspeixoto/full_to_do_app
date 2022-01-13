@@ -18,6 +18,7 @@ const HeaderWrapper = styled(Box)(
 		position: fixed;
 		justify-content: space-between;
 		width: 100%;
+		border-bottom: 4px solid ${theme.footer.borderColor};;
 `,
 );
 
@@ -30,7 +31,7 @@ export const Header = () => {
 				alignItems='center'
 				justifyContent='start'
 			>
-				<img width='30%' height='30%' alt='Logo' src={Logo} />
+				<img width='90px' height='40px' alt='Logo' src={Logo} />
 			</Box>
 			<Box display='flex' alignItems='center'>
 				<Notifications />

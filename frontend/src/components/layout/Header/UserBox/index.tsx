@@ -15,56 +15,69 @@ import {
 } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
-import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
-import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 
-import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
-import PersonIcon from '@mui/icons-material/Person';
+import KingBedIcon from '@mui/icons-material/KingBed'; //! Hora de Dormir
+import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded'; //! Bom dia
+import Brightness4Icon from '@mui/icons-material/Brightness4'; //! Boa Tarde
+import NightsStayRoundedIcon from '@mui/icons-material/NightsStayRounded'; //! Boa noite
+
+import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
+import HomeIcon from '@mui/icons-material/Home';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import QrCode2Icon from '@mui/icons-material/QrCode2';
+
 import { ThemeSwitch } from '@components/layout/Toggle';
 import { useTheme } from '@hooks/useTheme';
+import { getGreeting } from '@core/helpers/CommonHelpers';
+
+const greetings = {
+	0: <KingBedIcon fontSize='medium' />,
+	1: <WbSunnyRoundedIcon fontSize='medium' />,
+	2: <Brightness4Icon fontSize='medium' />,
+	3: <NightsStayRoundedIcon fontSize='medium' />,
+};
 
 const UserBoxButton = styled(Button)(
 	({ theme }) => `
-        padding-left: ${theme.spacing(1)};
-        padding-right: ${theme.spacing(1)};
+		padding-left: ${theme.spacing(1)};
+		padding-right: ${theme.spacing(1)};
 `,
 );
 
 const MenuUserBox = styled(Box)(
 	({ theme }) => `
-        background: ${theme.colors.alpha.black[5]};
-        padding: ${theme.spacing(2)};
+		background: ${theme.colors.alpha.black[5]};
+		padding: ${theme.spacing(2)};
 `,
 );
 
 const UserBoxText = styled(Box)(
 	({ theme }) => `
-        text-align: left;
-        padding-left: ${theme.spacing(1)};
+		text-align: left;
+		padding-left: ${theme.spacing(1)};
 `,
 );
 
 const UserBoxLabel = styled(Typography)(
 	({ theme }) => `
-        font-weight: ${theme.typography.fontWeightBold};
-        color: ${theme.palette.secondary.main};
-        display: block;
+		font-weight: ${theme.typography.fontWeightBold};
+		color: ${theme.palette.secondary.main};
+		display: block;
 `,
 );
 
 const UserBoxDescription = styled(Typography)(
 	({ theme }) => `
-        color: ${lighten(theme.palette.secondary.main, 0.5)}
+		color: ${lighten(theme.palette.secondary.main, 0.5)}
 `,
 );
 
 export const HeaderUserbox = () => {
+	const { message, type } = getGreeting();
 	const { themeName, setThemeName } = useTheme();
-
 	const [darkTheme, setDarkTheme] = useState(() =>
 		themeName === 'NebulaFighterTheme' ? true : false,
 	);
-
 	const handleChangeTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setDarkTheme(event.target.checked);
 		if (darkTheme) {
@@ -88,16 +101,32 @@ export const HeaderUserbox = () => {
 	return (
 		<>
 			<UserBoxButton color='secondary' ref={ref} onClick={handleOpen}>
-				{/* <Avatar variant='rounded' alt={Lucas} src={user.photoUrl} /> */}
+				<Hidden mdUp>
+					<MenuTwoToneIcon />
+				</Hidden>
 				<Hidden mdDown>
 					<UserBoxText>
-						<UserBoxLabel variant='body1'>Olá</UserBoxLabel>
-						<UserBoxDescription variant='body2'>Se Organize</UserBoxDescription>
+						<UserBoxLabel variant='body1'>
+							<Box
+								display='flex'
+								alignItems='center'
+								justifyContent='center'
+								sx={{ p: 0, gap: 1 }}
+							>
+								<Typography sx={{ pl: 0 }} variant='h4'>
+									{message}{' '}
+								</Typography>
+								{greetings[type]}
+							</Box>
+						</UserBoxLabel>
+						<UserBoxDescription variant='body2'>
+							Finalize suas Tarefas
+						</UserBoxDescription>
 					</UserBoxText>
 				</Hidden>
-				<Hidden smDown>
-					<ExpandMoreTwoToneIcon sx={{ ml: 1 }} />
-				</Hidden>
+				{/* <Hidden smUp>
+					<MenuTwoToneIcon sx={{ ml: 1 }} />
+				</Hidden> */}
 			</UserBoxButton>
 			<Popover
 				anchorEl={ref.current}
@@ -114,27 +143,35 @@ export const HeaderUserbox = () => {
 			>
 				<MenuUserBox sx={{ minWidth: 210 }} display='flex'>
 					<UserBoxText>
-						<UserBoxLabel variant='body1'>Olá</UserBoxLabel>
-						<UserBoxDescription variant='body2'>Se Organize</UserBoxDescription>
+						<UserBoxLabel variant='body1'>{message}</UserBoxLabel>
+						<UserBoxDescription variant='body2'>
+							Não deixe de finalizar as suas tarefas.
+						</UserBoxDescription>
 					</UserBoxText>
 				</MenuUserBox>
 				<Divider sx={{ mb: 0 }} />
 				<List sx={{ p: 1 }} component='nav'>
 					<ListItem button to='/' component={NavLink}>
-						<AccountBoxTwoToneIcon fontSize='small' />
+						<HomeIcon fontSize='small' />
 						<ListItemText primary='Início' />
 					</ListItem>
 					<ListItem button to='/task' component={NavLink}>
-						<ContactPhoneIcon fontSize='small' />
+						<AddBoxIcon fontSize='small' />
 						<ListItemText primary='Nova Tarefa' />
 					</ListItem>
 					<ListItem button to='/qrcode' component={NavLink}>
-						<PersonIcon fontSize='small' />
+						<QrCode2Icon fontSize='small' />
 						<ListItemText primary='Sincronizar Celular' />
 					</ListItem>
 				</List>
 				<Divider />
-				<Box display='flex' alignItems='center' justifyContent='center'>
+				<Box
+					display='flex'
+					alignItems='center'
+					justifyContent='center'
+					sx={{ gap: 1 }}
+				>
+					<Typography variant='h3'>Tema</Typography>
 					<ThemeSwitch checked={darkTheme} onChange={handleChangeTheme} />
 				</Box>
 			</Popover>

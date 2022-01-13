@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Header } from '../Header';
+import { Footer } from '../Footer';
 
 interface BaseLayoutProps {
 	children?: ReactNode;
@@ -32,6 +33,7 @@ const SidebarLayout: React.FC<BaseLayoutProps> = () => {
 				<MainContent>
 					<Outlet />
 				</MainContent>
+				<Footer />
 			</MainWrapper>
 		</>
 	);

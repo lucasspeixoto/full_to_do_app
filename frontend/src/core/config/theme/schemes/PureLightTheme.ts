@@ -10,6 +10,7 @@ const themeColors = {
 	info: '#33C2FF',
 	black: '#223354',
 	white: '#ffffff',
+	orange: '#EE6B26',
 	primaryAlt: '#000C57',
 };
 
@@ -235,6 +236,14 @@ export const PureLightTheme = createTheme({
 		background: colors.alpha.white[100],
 		boxShadow: colors.shadows.cardSm,
 		textColor: colors.secondary.main,
+		borderColor: themeColors.orange,
+	},
+	footer: {
+		height: '55px',
+		background: colors.alpha.white[100],
+		boxShadow: colors.shadows.cardSm,
+		textColor: colors.secondary.main,
+		borderColor: themeColors.orange,
 	},
 	spacing: 8,
 	palette: {

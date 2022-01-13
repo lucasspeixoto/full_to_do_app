@@ -12,6 +12,7 @@ const themeColors = {
 	info: '#33C2FF',
 	black: '#CBCCD2',
 	white: '#111633',
+	orange: '#EE6B26',
 	primaryAlt: '#111633',
 	trueWhite: '#ffffff',
 };
@@ -234,6 +235,14 @@ export const NebulaFighterTheme = createTheme({
 		background: themeColors.primaryAlt,
 		boxShadow: '0px 1px 0px #272C48',
 		textColor: colors.secondary.main,
+		borderColor: themeColors.orange,
+	},
+	footer: {
+		height: '55px',
+		background: themeColors.primaryAlt,
+		boxShadow: '0px 1px 0px #272C48',
+		textColor: colors.secondary.main,
+		borderColor: themeColors.orange,
 	},
 	spacing: 8,
 	palette: {
