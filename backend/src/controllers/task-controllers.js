@@ -1,26 +1,34 @@
-const HttpError = require("../models/http-error");
 const TaskModel = require("../models/task");
-const { isPast } = require("date-fns");
+const {
+  startOfDay,
+  endOfDay,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  startOfYear,
+  endOfYear,
+} = require("date-fns");
+const current = new Date();
 
 class TaskController {
-  async create(req, res, next) {
+  async getAllTasks(req, res) {
+    await TaskModel.find({ macaddress: { $in: req.params.macaddress } })
+      .sort("when")
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado na listagem das tarefas, tente novamente.",
+          500
+        );
+        throw error;
+      });
+  }
+
+  async create(req, res) {
     const task = new TaskModel(req.body);
-
-    //* Verificar se task ja foi criada
-    /* let exists;
-    if (isPast(new Date(task.when))) {
-      return res.status(400).json({ error: "Escolha uma data e hora futura" });
-    }
-    exists = await TaskModel.findOne({
-      when: { $eq: new Date(task.when) },
-      macaddress: { $in: task.macaddress },
-    });
-
-    if (exists) {
-      return res
-        .status(400)
-        .json({ error: "Já existe uma tarefa nesse dia e horário" });
-    } */
 
     await task
       .save()
@@ -28,30 +36,17 @@ class TaskController {
         res.status(201).json(response);
       })
       .catch(() => {
-        return res.status(500).json({
-          error: "Algo deu errado na criação desta tarefa, tente novamente.",
-        });
+        const error = new HttpError(
+          "Algo deu errado na criação desta tarefa, tente novamente.",
+          500
+        );
+        throw error;
       });
   }
 
-  async update(req, res, next) {
+  async update(req, res) {
     const taskUpdated = req.body;
     const taskId = req.params.id;
-
-    /* let exists;
-    if (taskId) {
-      exists = await TaskModel.findOne({
-        _id: { $ne: taskId },
-        when: { $eq: new Date(taskUpdated.when) },
-        macaddress: { $in: taskUpdated.macaddress },
-      });
-    }
-
-    if (exists) {
-      return res
-        .status(400)
-        .json({ error: "Já existe uma tarefa nesse dia e horário" });
-    } */
 
     await TaskModel.findOneAndUpdate({ _id: taskId }, taskUpdated, {
       new: true,
@@ -61,9 +56,156 @@ class TaskController {
         return res.status(200).json(response);
       })
       .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado na edição desta tarefa, tente novamente.",
+          500
+        );
+        throw error;
+      });
+  }
+
+  async getTaskById(req, res) {
+    const taskId = req.params.id;
+
+    await TaskModel.findById(taskId)
+      .then((response) => {
+        if (response) {
+          return res.status(200).json(response);
+        } else {
+          return res.status(404).json({ error: "Tarefa não encontrada" });
+        }
+      })
+      .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado na seleção desta tarefa, tente novamente.",
+          500
+        );
+        throw error;
+      });
+  }
+
+  async deleteTaskById(req, res) {
+    const taskId = req.params.id;
+
+    await TaskModel.deleteOne({ _id: taskId })
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado ao tentar deletar esta tarefa, tente novamente.",
+          500
+        );
+        throw error;
+      });
+  }
+
+  async updateTaskStatus(req, res) {
+    const { id: taskId, done } = req.params;
+
+    await TaskModel.findByIdAndUpdate(
+      { _id: taskId },
+      { done: done },
+      { new: true, useFindAndModify: false }
+    )
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado ao tentar atualizar o status desta tarefa, tente novamente.",
+          500
+        );
+        throw error;
+      });
+  }
+
+  async getAllLateTasks(req, res) {
+    await TaskModel.find({
+      when: { $lt: current },
+      macaddress: { $in: req.params.macaddress },
+    })
+      .sort("when")
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado ao tentar listar as tarefas atrasadas, tente novamente.",
+          500
+        );
+        throw error;
+      });
+  }
+
+  async getAllTodayTasks(req, res) {
+    await TaskModel.find({
+      macaddress: { $in: req.params.macaddress },
+      when: { $gte: startOfDay(current), $lte: endOfDay(current) },
+    })
+      .sort("when")
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch((err) => {
         return res.status(500).json({
-          error: "Algo deu errado na edição desta tarefa, tente novamente.",
+          error:
+            "Algo deu errado ao tentar listar as tarefas de hoje, tente novamente.",
         });
+      });
+  }
+
+  async getAllWeekTasks(req, res) {
+    await TaskModel.find({
+      macaddress: { $in: req.params.macaddress },
+      when: { $gte: startOfWeek(current), $lte: endOfWeek(current) },
+    })
+      .sort("when")
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado ao tentar listar as tarefas desta semana, tente novamente.",
+          500
+        );
+        throw error;
+      });
+  }
+
+  async getAllMonthTasks(req, res) {
+    await TaskModel.find({
+      macaddress: { $in: req.params.macaddress },
+      when: { $gte: startOfMonth(current), $lte: endOfMonth(current) },
+    })
+      .sort("when")
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado ao tentar listar as tarefas deste mês, tente novamente.",
+          500
+        );
+        throw error;
+      });
+  }
+
+  async getAllYearTasks(req, res) {
+    await TaskModel.find({
+      macaddress: { $in: req.params.macaddress },
+      when: { $gte: startOfYear(current), $lte: endOfYear(current) },
+    })
+      .sort("when")
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch(() => {
+        const error = new HttpError(
+          "Algo deu errado ao tentar listar as tarefas do ano, tente novamente.",
+          500
+        );
+        throw error;
       });
   }
 }

@@ -1,11 +1,11 @@
 const { validationResult } = require("express-validator");
-
 const { isPast } = require("date-fns");
-
+const HttpError = require("../models/http-error");
 const TaskModel = require("../models/task");
 
 const TaskValidation = async (req, res, next) => {
-  const { macaddress, type, title, description, when } = req.body;
+  const { macaddress, when } = req.body;
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const requestErros = errors.errors;
@@ -30,8 +30,13 @@ const TaskValidation = async (req, res, next) => {
     });
     //* Caso esteja criando uma tarefa
   } else {
-    if (isPast(new Date(when)))
-      return res.status(400).json({ error: "Uma Tarefa deve ter data de entrega futura!" });
+    if (isPast(new Date(when))) {
+      const error = new HttpError(
+        "Uma Tarefa deve ter data de entrega futura!",
+        400
+      );
+      return next(error);
+    }
     exists = await TaskModel.findOne({
       when: { $eq: new Date(when) },
       macaddress: { $in: macaddress },
@@ -39,9 +44,11 @@ const TaskValidation = async (req, res, next) => {
   }
 
   if (exists) {
-    return res
-      .status(400)
-      .json({ error: "já existe uma tarefa nesse dia e horário" });
+    const error = new HttpError(
+      "Já existe uma tarefa nesse dia e horário.",
+      400
+    );
+    return next(error);
   }
 
   next();

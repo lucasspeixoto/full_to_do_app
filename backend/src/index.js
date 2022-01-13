@@ -10,9 +10,9 @@ const TaskRoutes = require("./routes/task-routes");
 
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
 
-/* app.use((req, res, next) => {
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -20,17 +20,17 @@ app.use(express.json());
   );
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   next();
-}); */
+});
 
 app.use("/task", TaskRoutes);
 
 //Middleware que só é chamado caso não obtenha resposta do middleware anterior ( quando der erro em '/api/places')
 app.use((req, res, next) => {
-  const error = new HttpError("Could not find this route", 404);
+  const error = new HttpError("Não foi possível encontrar está rota.", 404);
   throw error;
 });
 
-/* app.use((error, req, res, next) => {
+app.use((error, req, res, next) => {
   if (req.file) {
     fs.unlink(req.file.path, (err) => {
       console.log(err);
@@ -41,8 +41,8 @@ app.use((req, res, next) => {
   }
 
   res.status(error.code || 500);
-  res.json({ message: error.message || "An unknown error occurred!" });
-}); */
+  res.json({ message: error.message || "Um erro desconhecido ocorreu!" });
+});
 
 mongoose
   .connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
