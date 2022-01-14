@@ -1,9 +1,12 @@
-import React from 'react';
+import React from "react";
+import BaseLayout from "@components/Layout/BaseLayout";
 
-export const QrCode: React.FC = () => {
-	return (
-		<>
-			<h1>QrCode</h1>
-		</>
-	);
+const QrCode: React.FC = () => {
+  return (
+    <BaseLayout>
+      <h1>QrCode</h1>
+    </BaseLayout>
+  );
 };
+
+export default QrCode;

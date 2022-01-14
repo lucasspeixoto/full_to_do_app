@@ -1,20 +1,15 @@
-import { CssBaseline } from '@mui/material';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { AppRoutes } from "@config/routes";
+import React from "react";
+import { ThemeProvider } from "styled-components";
+import GlobalStyles from "@styles/GlobalStyles";
+import { useTheme } from "@hooks/useTheme";
 
-import ThemeProviderWrapper from '@contexts/ThemeContext';
-
-import { Routes } from '@core/config/routes';
-
-const App = () => {
-	return (
-		<ThemeProviderWrapper>
-			<LocalizationProvider dateAdapter={AdapterDateFns}>
-				<CssBaseline />
-				<Routes />
-			</LocalizationProvider>
-		</ThemeProviderWrapper>
-	);
+export const App: React.FC = () => {
+  const { theme } = useTheme();
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <AppRoutes />
+    </ThemeProvider>
+  );
 };
-
-export default App;

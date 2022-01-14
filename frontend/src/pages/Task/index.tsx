@@ -1,9 +1,12 @@
-import React from 'react';
+import React from "react";
+import BaseLayout from "@components/Layout/BaseLayout";
 
-export const Task: React.FC = () => {
-	return (
-		<>
-			<h1>Task</h1>
-		</>
-	);
+const Task: React.FC = () => {
+  return (
+    <BaseLayout>
+      <h1>Task</h1>
+    </BaseLayout>
+  );
 };
+
+export default Task;

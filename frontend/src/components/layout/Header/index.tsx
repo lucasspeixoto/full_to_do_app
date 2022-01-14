@@ -1,44 +1,63 @@
-import { Box } from '@mui/material';
-import { styled } from '@mui/material/styles';
+//import React, { useEffect, useState } from "react";
+import * as S from "./styles";
+import { Link } from "react-router-dom";
 
-import { HeaderUserbox } from './UserBox';
-import { Notifications } from './Notifications';
+import logo from "@assets/logo.png";
+import bell from "@assets/bell.png";
 
-import Logo from '@assets/logo.png';
+const Header = () => {
+  /* const [lateCount, setLateCount] = useState();
 
-const HeaderWrapper = styled(Box)(
-	({ theme }) => `
-		height: ${theme.header.height};
-		color: ${theme.header.textColor};
-		padding: ${theme.spacing(0, 2)};
-		right: 0;
-		z-index: 5;
-		background-color: ${theme.header.background};
-		box-shadow: ${theme.header.boxShadow};
-		position: fixed;
-		justify-content: space-between;
-		width: 100%;
-		border-bottom: 4px solid ${theme.footer.borderColor};
-`,
-);
+  async function lateVerify(){
+    await api.get(`/task/filter/late/${isConnected}`)
+    .then(response => {
+      setLateCount(response.data.length)
+    })
+  }
 
-export const Header = () => {
-	return (
-		<HeaderWrapper display='flex' alignItems='center'>
-			<Box
-				sx={{ p: 0 }}
-				display='flex'
-				alignItems='center'
-				justifyContent='start'
-			>
-				<a href='/'>
-					<img width='90px' height='40px' alt='Logo' src={Logo} />
-				</a>
-			</Box>
-			<Box display='flex' alignItems='center'>
-				<Notifications />
-				<HeaderUserbox />
-			</Box>
-		</HeaderWrapper>
-	);
+  useEffect(() => {
+    lateVerify();
+  })
+
+  async function Logout(){
+    localStorage.removeItem('@todo/macaddress');
+    window.location.reload();
+  } */
+
+  return (
+    <S.Container>
+      <S.LeftSide>
+        <img src={logo} alt='Logo' />
+      </S.LeftSide>
+      <S.RightSide>
+        <Link to='/'>Início</Link>
+        <span className='dividir' />
+        <Link to='/task'>Nova Tarefa</Link>
+        <span className='dividir' />
+        <Link to='/qrcode'>Sincronizar Celular</Link>
+        <span className='dividir' />
+        <button onClick={() => {}}>
+          <img src={bell} alt='Notificação' />
+          <span>{1}</span>
+        </button>
+        {/* { !isConnected ?
+          <Link to="/qrcode">SINCRONIZAR CELULAR</Link>
+          :
+          <button type="button" onClick={Logout}>SAIR</button>
+        }
+        {
+          lateCount &&
+          <>            
+            <span className="dividir" />
+            <button onClick={clickNotification}>
+              <img src={bell} alt="Notificação" />
+              <span>{lateCount}</span>
+            </button>
+          </>
+        } */}
+      </S.RightSide>
+    </S.Container>
+  );
 };
+
+export default Header;

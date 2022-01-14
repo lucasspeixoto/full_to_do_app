@@ -1,49 +1,35 @@
-import React, { useState } from 'react';
-import FilterCard from '@components/pages/FilterCard';
+import React, { useState } from "react";
+import BaseLayout from "@components/Layout/BaseLayout";
+import FilterCard from "@components/pages/FilterCard";
 
-import { styled } from '@mui/material/styles';
-import { Button, Grid } from '@mui/material';
-
-const FilterButton = styled(Button)(
-	({ theme }) => `
-  padding: 0;
-  cursor: pointer;
-
-	&:hover{
-    background: none
-  }
- 
-`,
-);
+import * as S from "./styles";
 
 const filters = [
-	{ type: 'all', title: 'Todos' },
-	{ type: 'today', title: 'Hoje' },
-	{ type: 'week', title: 'Semana' },
-	{ type: 'month', title: 'Mês' },
-	{ type: 'year', title: 'Year' },
+  { type: "all", title: "Todos" },
+  { type: "today", title: "Hoje" },
+  { type: "week", title: "Semana" },
+  { type: "month", title: "Mês" },
+  { type: "year", title: "Ano" },
 ];
 
-export const Home: React.FC = () => {
-	const [filterActived, setFilterActived] = useState('all');
+const Home: React.FC = () => {
+  const [selecterdFilter, setSelectedFilter] = useState("all");
 
-	return (
-		<Grid
-			container
-			direction='row'
-			justifyContent='space-evenly'
-			sx={{ gap: '15px', p: '15px', mt: '15px' }}
-		>
-			{filters.map(filter => (
-				<Grid item key={filter.type}>
-					<FilterButton onClick={() => setFilterActived(filter.type)}>
-						<FilterCard
-							title={filter.title}
-							actived={filterActived === filter.type}
-						/>
-					</FilterButton>
-				</Grid>
-			))}
-		</Grid>
-	);
+  return (
+    <BaseLayout>
+      <S.FilterArea>
+        {filters.map((filter) => (
+          <button type='button' onClick={() => setSelectedFilter(filter.type)}>
+            <FilterCard
+              key={filter.title}
+              title={filter.title}
+              actived={selecterdFilter === filter.type}
+            />
+          </button>
+        ))}
+      </S.FilterArea>
+    </BaseLayout>
+  );
 };
+
+export default Home;
