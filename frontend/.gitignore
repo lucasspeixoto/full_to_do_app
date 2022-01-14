@@ -11,15 +11,9 @@
 # production
 /build
 
-# IDEs and editors
-/.idea
-/.vscode
-
 # misc
 .DS_Store
 .env.local
-.editorconfig
-.prettierrc
 .env.development.local
 .env.test.local
 .env.production.local
@@ -27,13 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Firebase
-.firebaserc
-firebase.json
-firestore.indexes.json
-firestore.rules
-.github
-.firebase
-database.rules.json
-

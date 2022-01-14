@@ -1,17 +1,21 @@
 import React, { ReactNode } from "react";
-import PropTypes from "prop-types";
-import { Outlet } from "react-router-dom";
+import Footer from "../Footer";
+import Header from "../Header";
+
+import * as S from "./styles";
 
 interface BaseLayoutProps {
   children?: ReactNode;
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
-  return <>{children || <Outlet />}</>;
-};
-
-BaseLayout.propTypes = {
-  children: PropTypes.node,
+  return (
+    <S.Container>
+      <Header />
+      {children}
+      <Footer />
+    </S.Container>
+  );
 };
 
 export default BaseLayout;
