@@ -27,17 +27,17 @@ const Header = () => {
   return (
     <S.Container>
       <S.LeftSide>
-        <img src={logo} alt='Logo' />
+        <img src={logo} alt="Logo" />
       </S.LeftSide>
       <S.RightSide>
-        <Link to='/'>Início</Link>
-        <span className='dividir' />
-        <Link to='/task'>Nova Tarefa</Link>
-        <span className='dividir' />
-        <Link to='/qrcode'>Sincronizar Celular</Link>
-        <span className='dividir' />
+        <Link to="/">Início</Link>
+        <span className="dividir" />
+        <Link to="/task">Nova Tarefa</Link>
+        <span className="dividir" />
+        <Link to="/qrcode">Sincronizar Celular</Link>
+        <span className="dividir" />
         <button onClick={() => {}}>
-          <img src={bell} alt='Notificação' />
+          <img src={bell} alt="Notificação" />
           <span>{1}</span>
         </button>
         {/* { !isConnected ?

@@ -6,18 +6,17 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
   }
 
   html, body, #root {
-    height: 100%;
+    height: 100vh;
     background-color: ${(props) => props.theme.colors.primary};
   }
 
   *, button, input {
     border: 0;
     outline: 0;
-    font-family: 'Roboto', 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
   button {
@@ -34,7 +33,7 @@ export default createGlobalStyle`
 
 	::-webkit-scrollbar-thumb {
 		background-color: ${(props) => props.theme.colors.secondary};
-		border-radius: 20px;
+    border-radius: 20px;
 	}
 
 	::-webkit-scrollbar-thumb:hover {
@@ -67,7 +66,6 @@ export default createGlobalStyle`
     }
   }
 
-
   textarea {
 	  font-size: 5.5rem;
 	  resize: none;
@@ -84,6 +82,14 @@ export default createGlobalStyle`
 
     align-items: center;
     justify-content: center;
+  }
+
+  .unselect {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
   }
 
 `;

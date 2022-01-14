@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   height: 70px;
-  background: #20295f;
-  border-bottom: 5px solid #ee6b26;
+  background: ${(props) => props.theme.colors.tertiary};
+  border-bottom: 5px solid ${(props) => props.theme.colors.orange};
 
   display: flex;
 `;
@@ -37,13 +37,13 @@ export const RightSide = styled.div`
 
   a,
   button {
-    color: #fff;
+    color: ${(props) => props.theme.colors.white};
     font-weight: bold;
     text-decoration: none;
     margin: 0 10px;
 
     &:hover {
-      color: #ee6b26;
+      color: ${(props) => props.theme.colors.orange};
     }
 
     img {
@@ -52,8 +52,8 @@ export const RightSide = styled.div`
     }
 
     span {
-      background: #fff;
-      color: #ee6b26;
+      background: ${(props) => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.orange};
       padding: 3px 7px;
       border-radius: 50%;
       position: relative;
@@ -69,7 +69,7 @@ export const RightSide = styled.div`
   .dividir::after {
     content: "|";
     margin: 0 10px;
-    color: #fff;
+    color: ${(props) => props.theme.colors.white};
   }
 
   button {

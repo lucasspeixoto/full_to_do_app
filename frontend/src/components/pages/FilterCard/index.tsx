@@ -9,10 +9,9 @@ interface FilterCardProps {
 }
 
 const FilterCard: React.FC<FilterCardProps> = ({ title, actived }) => {
-
   return (
-    <S.Container actived={actived}>
-      <img src={FilterLogo} alt='Logo Filtro' />
+    <S.Container className="unselect" actived={actived}>
+      <img src={FilterLogo} alt="Logo Filtro" />
       <span>{title}</span>
     </S.Container>
   );

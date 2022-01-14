@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import BaseLayout from "@components/Layout/BaseLayout";
 import FilterCard from "@components/pages/FilterCard";
+import TaskCard from "@components/pages/TaskCard";
 
 import * as S from "./styles";
 
@@ -17,17 +18,48 @@ const Home: React.FC = () => {
 
   return (
     <BaseLayout>
-      <S.FilterArea>
-        {filters.map((filter) => (
-          <button type='button' onClick={() => setSelectedFilter(filter.type)}>
-            <FilterCard
+      <S.Container>
+        <S.FilterArea>
+          {filters.map((filter) => (
+            <button
               key={filter.title}
-              title={filter.title}
-              actived={selecterdFilter === filter.type}
-            />
-          </button>
-        ))}
-      </S.FilterArea>
+              type='button'
+              onClick={() => setSelectedFilter(filter.type)}
+            >
+              <FilterCard
+                title={filter.title}
+                actived={selecterdFilter === filter.type}
+              />
+            </button>
+          ))}
+        </S.FilterArea>
+        <S.Title>
+          <h2>Tarefas</h2>
+        </S.Title>
+        <S.TasksArea>
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+        </S.TasksArea>
+      </S.Container>
     </BaseLayout>
   );
 };

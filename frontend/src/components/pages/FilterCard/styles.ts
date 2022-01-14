@@ -7,7 +7,8 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   width: 230px;
   height: 60px;
-  background: ${(props) => (props.actived ? "#ee6b26" : "#20295f")};
+  background: ${(props) =>
+    props.actived ? props.theme.colors.orange : props.theme.colors.secondary};
   cursor: pointer;
   padding: 10px;
 
@@ -20,12 +21,12 @@ export const Container = styled.div<ContainerProps>`
   img {
     width: 30px;
     height: 30px;
-
+    color: ${(props) => props.theme.colors.white};
     margin-top: 10px;
   }
 
   span {
-    color: #fff;
+    color: ${(props) => props.theme.colors.white};
     font-weight: bold;
     font-size: 18px;
     align-self: flex-end;
@@ -34,6 +35,6 @@ export const Container = styled.div<ContainerProps>`
   }
 
   &:hover {
-    background: #ee6b26;
+    background: ${(props) => props.theme.colors.orange};
   }
 `;
