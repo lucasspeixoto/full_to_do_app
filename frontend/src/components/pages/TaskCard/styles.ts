@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+interface ContainerProps {
+  done: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   width: 250px;
-  height: 200px;
+  height: 180px;
 
   cursor: pointer;
 
@@ -18,9 +22,10 @@ export const Container = styled.div`
   flex-direction: column;
 
   transition: all 0.3s ease;
-
-  &:hover { 
-    opacity: .5;
+  opacity: ${props => props.done ? 0.5 : 1};
+  
+  &:hover {
+    opacity: 0.5;
   }
 `;
 
@@ -30,7 +35,7 @@ export const TopCard = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  h2 {
+  h3 {
     color: ${(props) => props.theme.colors.white};
     margin-top: 5px;
   }

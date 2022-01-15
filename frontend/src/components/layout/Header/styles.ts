@@ -54,6 +54,7 @@ export const RightSide = styled.div`
     span {
       background: ${(props) => props.theme.colors.white};
       color: ${(props) => props.theme.colors.orange};
+      font-weight: bold;
       padding: 3px 7px;
       border-radius: 50%;
       position: relative;

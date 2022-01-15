@@ -29,6 +29,8 @@ export default createGlobalStyle`
 
   ::-webkit-scrollbar {
 		width: 15px;
+    background: transition;
+    backdrop-filter: blur(20px);
 	}
 
 	::-webkit-scrollbar-thumb {
@@ -37,7 +39,7 @@ export default createGlobalStyle`
 	}
 
 	::-webkit-scrollbar-thumb:hover {
-		background-color: ${(props) => props.theme.colors.grey};
+		background-color: ${(props) => props.theme.colors.tertiary};
 	}
 
   .error-message {

@@ -17,6 +17,7 @@ export const FilterArea = styled.div`
   justify-content: space-around;
 
   margin-top: 30px;
+  gap: 8px;
 
   button {
     background: none;
@@ -29,7 +30,7 @@ export const Title = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.colors.white};
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 10px;
 
   h2 {
     color: ${(props) => props.theme.colors.white};

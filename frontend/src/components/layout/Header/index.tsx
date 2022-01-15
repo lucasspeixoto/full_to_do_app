@@ -1,60 +1,48 @@
-//import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+
 import * as S from "./styles";
 import { Link } from "react-router-dom";
 
 import logo from "@assets/logo.png";
 import bell from "@assets/bell.png";
+import api from "@core/services/api";
 
-const Header = () => {
-  /* const [lateCount, setLateCount] = useState();
+interface HeaderProps {
+  showLateTasks?: () => void;
+}
 
-  async function lateVerify(){
-    await api.get(`/task/filter/late/${isConnected}`)
-    .then(response => {
-      setLateCount(response.data.length)
-    })
-  }
+const Header: React.FC<HeaderProps> = ({ showLateTasks }) => {
+  const [lateTasksNumber, setLateTasksNumber] = useState();
+
+  const checkLateTasks = useCallback(async () => {
+    await api.get(`/task/filter/late/11:11:11:11:11:11`).then((response) => {
+      if (response.data) {
+        const numberOfLateTasks = response.data.length;
+        setLateTasksNumber(numberOfLateTasks);
+      }
+    });
+  }, []);
 
   useEffect(() => {
-    lateVerify();
-  })
-
-  async function Logout(){
-    localStorage.removeItem('@todo/macaddress');
-    window.location.reload();
-  } */
+    checkLateTasks();
+  }, [checkLateTasks]);
 
   return (
     <S.Container>
       <S.LeftSide>
-        <img src={logo} alt="Logo" />
+        <img src={logo} alt='Logo' />
       </S.LeftSide>
       <S.RightSide>
-        <Link to="/">Início</Link>
-        <span className="dividir" />
-        <Link to="/task">Nova Tarefa</Link>
-        <span className="dividir" />
-        <Link to="/qrcode">Sincronizar Celular</Link>
-        <span className="dividir" />
-        <button onClick={() => {}}>
-          <img src={bell} alt="Notificação" />
-          <span>{1}</span>
+        <Link to='/'>Início</Link>
+        <span className='dividir' />
+        <Link to='/task'>Nova Tarefa</Link>
+        <span className='dividir' />
+        <Link to='/qrcode'>Sincronizar Celular</Link>
+        <span className='dividir' />
+        <button onClick={() => showLateTasks()}>
+          <img src={bell} alt='Notificação' />
+          <span>{lateTasksNumber ? lateTasksNumber : 0}</span>
         </button>
-        {/* { !isConnected ?
-          <Link to="/qrcode">SINCRONIZAR CELULAR</Link>
-          :
-          <button type="button" onClick={Logout}>SAIR</button>
-        }
-        {
-          lateCount &&
-          <>            
-            <span className="dividir" />
-            <button onClick={clickNotification}>
-              <img src={bell} alt="Notificação" />
-              <span>{lateCount}</span>
-            </button>
-          </>
-        } */}
       </S.RightSide>
     </S.Container>
   );
