@@ -38,7 +38,7 @@ export const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
 export const ThemeProvider: React.FC = ({ children }) => {
   const lastSelectedTheme = useMemo(() => {
-    return localStorage.getItem("@money-balance:theme");
+    return localStorage.getItem("@todo:theme");
   }, []);
 
   const [theme, setTheme] = useState<ITheme>(
@@ -48,10 +48,10 @@ export const ThemeProvider: React.FC = ({ children }) => {
   const toggleTheme = () => {
     if (theme.title === "dark") {
       setTheme(light);
-      localStorage.setItem("@money-balance:theme", "light");
+      localStorage.setItem("@todo:theme", "light");
     } else {
       setTheme(dark);
-      localStorage.setItem("@money-balance:theme", "dark");
+      localStorage.setItem("@todo:theme", "dark");
     }
   };
 

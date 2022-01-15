@@ -16,6 +16,8 @@ export const LeftSide = styled.div`
   align-items: center;
   padding-left: 10px;
 
+  gap: 20px;
+
   img {
     width: 100px;
     height: 40px;

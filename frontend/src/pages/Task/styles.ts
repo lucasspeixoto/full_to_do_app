@@ -20,6 +20,8 @@ export const IconsArea = styled.div`
   display: flex;
   justify-content: center;
 
+  margin-bottom: 10px;
+
   .inative {
     opacity: 0.5;
   }
@@ -39,5 +41,25 @@ export const IconsArea = styled.div`
     &:hover {
       opacity: 1;
     }
+  }
+`;
+
+export const Input = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-size: 22px;
+    color: ${(props) => props.theme.colors.white};
+    margin-bottom: 5px;
+  }
+
+  input {
+    font-size: 16px;
+    padding: 15px;
+    border: none;
+    border-bottom: 3px solid ${(props) => props.theme.colors.orange};
+    border-radius: 10px;
   }
 `;

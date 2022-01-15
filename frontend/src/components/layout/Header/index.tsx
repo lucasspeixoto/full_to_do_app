@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import * as S from "./styles";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -7,6 +7,8 @@ import logo from "@assets/logo.png";
 import bell from "@assets/bell.png";
 
 import { useTasks } from "@core/hooks/useTasks";
+import { useTheme } from "@core/hooks/useTheme";
+import { Toggle } from "../Toggle";
 
 const headerLinks = [
   { link: "/", title: "Início" },
@@ -16,8 +18,17 @@ const headerLinks = [
 
 const Header: React.FC = () => {
   const { lateTasksNumber, checkLateTasks, changeTasksFilter } = useTasks();
+  const { toggleTheme, theme } = useTheme();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [darkTheme, setDarkTheme] = useState(() =>
+    theme.title === "dark" ? true : false
+  );
+
+  const handleChangeTheme = () => {
+    setDarkTheme(!darkTheme);
+    toggleTheme();
+  };
 
   useEffect(() => {
     checkLateTasks();
@@ -26,7 +37,8 @@ const Header: React.FC = () => {
   return (
     <S.Container>
       <S.LeftSide>
-        <img src={logo} alt="Logo" />
+        <img src={logo} alt='Logo' />
+        <Toggle checked={darkTheme} onChange={handleChangeTheme} />
       </S.LeftSide>
       <S.RightSide>
         {headerLinks.map((headerLink) => (
@@ -36,7 +48,7 @@ const Header: React.FC = () => {
                 {headerLink.title}
               </h4>
             </Link>
-            <span className="dividir" />
+            <span className='dividir' />
           </React.Fragment>
         ))}
         <button
@@ -45,7 +57,7 @@ const Header: React.FC = () => {
             navigate("/");
           }}
         >
-          <img src={bell} alt="Notificação" />
+          <img src={bell} alt='Notificação' />
           <span>{lateTasksNumber ? lateTasksNumber : 0}</span>
         </button>
       </S.RightSide>
