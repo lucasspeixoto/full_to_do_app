@@ -26,7 +26,7 @@ const Header: React.FC = () => {
   return (
     <S.Container>
       <S.LeftSide>
-        <img src={logo} alt='Logo' />
+        <img src={logo} alt="Logo" />
       </S.LeftSide>
       <S.RightSide>
         {headerLinks.map((headerLink) => (
@@ -36,7 +36,7 @@ const Header: React.FC = () => {
                 {headerLink.title}
               </h4>
             </Link>
-            <span className='dividir' />
+            <span className="dividir" />
           </React.Fragment>
         ))}
         <button
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
             navigate("/");
           }}
         >
-          <img src={bell} alt='Notificação' />
+          <img src={bell} alt="Notificação" />
           <span>{lateTasksNumber ? lateTasksNumber : 0}</span>
         </button>
       </S.RightSide>

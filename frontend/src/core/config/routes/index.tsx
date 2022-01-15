@@ -8,11 +8,11 @@ export const AppRoutes: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/task' element={<Task />} />
-        <Route path='/task/:id' element={<Task />} />
-        <Route path='/qrcode' element={<QrCode />} />
-        <Route path='*' element={<Navigate to='/' />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/task" element={<Task />} />
+        <Route path="/task/:id" element={<Task />} />
+        <Route path="/qrcode" element={<QrCode />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );

@@ -19,13 +19,13 @@ const Task: React.FC = () => {
                 index > 0 && (
                   <button
                     key={index}
-                    type='button'
+                    type="button"
                     onClick={() => setType(index)}
-                    className='unselect'
+                    className="unselect"
                   >
                     <img
                       src={icon}
-                      alt='Tipo de Tarefa'
+                      alt="Tipo de Tarefa"
                       className={type && type !== index ? "inative" : ""}
                     />
                   </button>
