@@ -39,11 +39,13 @@ export const RightSide = styled.div`
   button {
     color: ${(props) => props.theme.colors.white};
     font-weight: bold;
+    font-size: 20px;
     text-decoration: none;
     margin: 0 10px;
 
     &:hover {
       color: ${(props) => props.theme.colors.orange};
+      opacity: 0.5;
     }
 
     img {
@@ -61,10 +63,11 @@ export const RightSide = styled.div`
       top: -20px;
       right: 10px;
     }
+  }
 
-    &:hover {
-      opacity: 0.5;
-    }
+  .active {
+    color: ${(props) => props.theme.colors.orange};
+    font-weight: bold;
   }
 
   .dividir::after {

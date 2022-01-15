@@ -22,9 +22,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, type, when, done }) => {
   }, [when]);
 
   return (
-    <S.Container className='unselect' done={done}>
+    <S.Container className="unselect" done={done}>
       <S.TopCard>
-        <img src={typeIcons[type]} alt='Logo Card de Tarefa' />
+        <img src={typeIcons[type]} alt="Logo Card de Tarefa" />
         <h3>{title}</h3>
       </S.TopCard>
       <S.BottomCard>

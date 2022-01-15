@@ -1,27 +1,23 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 
 import * as S from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import logo from "@assets/logo.png";
 import bell from "@assets/bell.png";
-import api from "@core/services/api";
 
-interface HeaderProps {
-  showLateTasks?: () => void;
-}
+import { useTasks } from "@core/hooks/useTasks";
 
-const Header: React.FC<HeaderProps> = ({ showLateTasks }) => {
-  const [lateTasksNumber, setLateTasksNumber] = useState();
+const headerLinks = [
+  { link: "/", title: "Início" },
+  { link: "/task", title: "Nova Tarefa" },
+  { link: "/qrcode", title: "Sincronizar Celular" },
+];
 
-  const checkLateTasks = useCallback(async () => {
-    await api.get(`/task/filter/late/11:11:11:11:11:11`).then((response) => {
-      if (response.data) {
-        const numberOfLateTasks = response.data.length;
-        setLateTasksNumber(numberOfLateTasks);
-      }
-    });
-  }, []);
+const Header: React.FC = () => {
+  const { lateTasksNumber, checkLateTasks, changeTasksFilter } = useTasks();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     checkLateTasks();
@@ -33,13 +29,22 @@ const Header: React.FC<HeaderProps> = ({ showLateTasks }) => {
         <img src={logo} alt='Logo' />
       </S.LeftSide>
       <S.RightSide>
-        <Link to='/'>Início</Link>
-        <span className='dividir' />
-        <Link to='/task'>Nova Tarefa</Link>
-        <span className='dividir' />
-        <Link to='/qrcode'>Sincronizar Celular</Link>
-        <span className='dividir' />
-        <button onClick={() => showLateTasks()}>
+        {headerLinks.map((headerLink) => (
+          <React.Fragment key={headerLink.link}>
+            <Link to={headerLink.link}>
+              <h4 className={pathname === headerLink.link ? "active" : ""}>
+                {headerLink.title}
+              </h4>
+            </Link>
+            <span className='dividir' />
+          </React.Fragment>
+        ))}
+        <button
+          onClick={() => {
+            changeTasksFilter("late");
+            navigate("/");
+          }}
+        >
           <img src={bell} alt='Notificação' />
           <span>{lateTasksNumber ? lateTasksNumber : 0}</span>
         </button>
