@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./styles";
 
-import FilterLogo from "@assets/filter.png";
+import FilterLogo from "@assets/filter-filled.png";
 
 interface FilterCardProps {
   title: string;
@@ -10,8 +10,8 @@ interface FilterCardProps {
 
 const FilterCard: React.FC<FilterCardProps> = ({ title, actived }) => {
   return (
-    <S.Container className="unselect" actived={actived}>
-      <img src={FilterLogo} alt="Logo Filtro" />
+    <S.Container className='unselect' actived={actived}>
+      <img src={FilterLogo} alt='Logo Filtro' />
       <span>{title}</span>
     </S.Container>
   );

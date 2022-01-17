@@ -7,6 +7,7 @@ import * as S from "./styles";
 import Header from "@components/Layout/Header";
 import Footer from "@components/Layout/Footer";
 import { useTasks } from "@core/hooks/useTasks";
+import { Link } from "react-router-dom";
 
 const filters = [
   { type: "mytasks", title: "Todos" },
@@ -27,7 +28,7 @@ const Home: React.FC = () => {
           {filters.map((filter) => (
             <button
               key={filter.title}
-              type="button"
+              type='button'
               onClick={() => {
                 changeTasksFilter(filter.type);
               }}
@@ -45,13 +46,14 @@ const Home: React.FC = () => {
         {tasks ? (
           <S.TasksArea>
             {tasks.map((task) => (
-              <TaskCard
-                key={task._id}
-                title={task.title}
-                type={task.type}
-                when={task.when}
-                done={task.done}
-              />
+              <Link key={task._id} to={`/task/${task._id}`}>
+                <TaskCard
+                  title={task.title}
+                  type={task.type}
+                  when={task.when}
+                  done={task.done}
+                />
+              </Link>
             ))}
           </S.TasksArea>
         ) : null}

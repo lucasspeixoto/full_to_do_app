@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 50px;
+  height: 40px;
   background: ${(props) => props.theme.colors.tertiary};
   border-top: 5px solid ${(props) => props.theme.colors.orange};
 

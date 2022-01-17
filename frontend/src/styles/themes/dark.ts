@@ -7,10 +7,10 @@ export default {
     secondary: "#252A48",
     tertiary: "#313862",
 
-    white: "#ccc",
-    black: "#000",
+    white: "#CCCCCC",
+    black: "#000000",
     grey: "#6B6B6B",
-    orange: "#ee6b26",
+    orange: "#EE6B26",
 
     success: "#4E41F0",
     info: "#F7931B",

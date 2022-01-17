@@ -21,7 +21,7 @@ export const Container = styled.div<ContainerProps>`
   img {
     width: 30px;
     height: 30px;
-    color: ${(props) => props.theme.colors.white};
+    backgroubd: ${(props) => props.theme.colors.white};
     margin-top: 10px;
   }
 

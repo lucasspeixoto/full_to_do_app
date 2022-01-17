@@ -33,7 +33,7 @@ class TaskController {
     await task
       .save()
       .then((response) => {
-        res.status(201).json(response);
+        res.status(201).json({message: 'Tarefa Cadastrada com sucesso!'});
       })
       .catch(() => {
         const error = new HttpError(

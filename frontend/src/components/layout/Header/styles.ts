@@ -2,16 +2,18 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 70px;
+  height: 55px;
   background: ${(props) => props.theme.colors.tertiary};
   border-bottom: 5px solid ${(props) => props.theme.colors.orange};
 
   display: flex;
+
+  padding-top: 2px;
 `;
 
 export const LeftSide = styled.div`
   width: 50%;
-  height: 70px;
+  height: 55px;
   display: flex;
   align-items: center;
   padding-left: 10px;
@@ -26,7 +28,7 @@ export const LeftSide = styled.div`
 
 export const RightSide = styled.div`
   width: 50%;
-  height: 70px;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -41,9 +43,9 @@ export const RightSide = styled.div`
   button {
     color: ${(props) => props.theme.colors.white};
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 5px;
 
     &:hover {
       color: ${(props) => props.theme.colors.orange};

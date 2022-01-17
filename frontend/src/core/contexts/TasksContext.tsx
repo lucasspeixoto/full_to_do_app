@@ -4,6 +4,8 @@ import useLocalStorage from "@core/hooks/useLocalStorage";
 import { ITasks } from "@core/types/tasks";
 import api from "@core/services/api";
 
+import toast, { ToastBar, Toaster } from "react-hot-toast";
+
 export interface TasksContextType {
   tasks: ITasks[];
   selectedFilter: string;
@@ -11,6 +13,7 @@ export interface TasksContextType {
   getTasks: () => Promise<void>;
   checkLateTasks: () => void;
   lateTasksNumber: number;
+  createTask: (task: Partial<ITasks>) => Promise<void>;
 }
 
 const lastFilter = localStorage.getItem("@todo:selectedFilter");
@@ -51,6 +54,25 @@ export const TasksContextProvider: React.FC = ({ children }) => {
     });
   }, []);
 
+  const createTask = async (task: Partial<ITasks>) => {
+    await api
+      .post("/task", task)
+      .then((response) => {
+        if (response.data) {
+          toast.success(response.data.message, {
+            style: { background: "#4E41F0", color: "#fff" },
+            duration: 3000,
+          });
+        }
+      })
+      .catch((error) => {
+        toast.error("Teste", {
+          style: { background: "#f04141", color: "#fff" },
+          duration: 3000,
+        });
+      });
+  };
+
   useEffect(() => {
     getTasks();
   }, [selectedFilter, getTasks]);
@@ -64,9 +86,25 @@ export const TasksContextProvider: React.FC = ({ children }) => {
         getTasks,
         checkLateTasks,
         lateTasksNumber,
+        createTask,
       }}
     >
-      {children}
+      <>
+        <Toaster position='top-right' reverseOrder={false}>
+          {(t) => (
+            <ToastBar
+              toast={t}
+              style={{
+                ...t.style,
+                animation: t.visible
+                  ? "custom-enter 1s ease"
+                  : "custom-exit 1s ease",
+              }}
+            />
+          )}
+        </Toaster>
+        {children}
+      </>
     </TasksContext.Provider>
   );
 };

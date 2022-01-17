@@ -5,12 +5,12 @@ export default {
   colors: {
     primary: "#DCDCDC",
     secondary: "#FFFFFF",
-    tertiary: "#ccc",
+    tertiary: "#CCCCCC",
 
-    white: "#000",
-    black: "#ccc",
+    white: "#000000",
+    black: "#CCCCCC",
     grey: "#6B6B6B",
-    orange: "#ee6b26",
+    orange: "#EE6B26",
 
     success: "#03BB85",
     info: "#3B5998",
