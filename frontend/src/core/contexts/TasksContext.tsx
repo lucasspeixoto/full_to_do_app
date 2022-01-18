@@ -8,12 +8,16 @@ import toast, { ToastBar, Toaster } from "react-hot-toast";
 
 export interface TasksContextType {
   tasks: ITasks[];
+  task: ITasks;
   selectedFilter: string;
   changeTasksFilter: (filter: string) => void;
   getTasks: () => Promise<void>;
   checkLateTasks: () => void;
   lateTasksNumber: number;
   createTask: (task: Partial<ITasks>) => Promise<void>;
+  loadTask: (_id: string) => Promise<void>;
+  updateTask: (task: Partial<ITasks>, _id: string) => Promise<void>;
+  deleteTask(_id: string): Promise<void>;
 }
 
 const lastFilter = localStorage.getItem("@todo:selectedFilter");
@@ -27,15 +31,8 @@ export const TasksContextProvider: React.FC = ({ children }) => {
   );
 
   const [tasks, setTasks] = useState<ITasks[]>([]);
+  const [task, setTask] = useState<ITasks>();
   const [lateTasksNumber, setLateTasksNumber] = useState();
-
-  const getTasks = useCallback(async () => {
-    await api
-      .get(`/task/filter/${selectedFilter}/11:11:11:11:11:11`)
-      .then((response) => {
-        setTasks(response.data);
-      });
-  }, [selectedFilter]);
 
   const changeTasksFilter = useCallback(
     (filter: string) => {
@@ -45,16 +42,35 @@ export const TasksContextProvider: React.FC = ({ children }) => {
     [setSelectedFilter]
   );
 
+  const getTasks = useCallback(async () => {
+    await api
+      .get(`/task/filter/${selectedFilter}/11:11:11:11:11:11`)
+      .then((response) => {
+        setTasks(response.data);
+      });
+  }, [selectedFilter]);
+
   const checkLateTasks = useCallback(async () => {
-    await api.get(`/task/filter/late/11:11:11:11:11:11`).then((response) => {
-      if (response.data) {
-        const numberOfLateTasks = response.data.length;
-        setLateTasksNumber(numberOfLateTasks);
-      }
-    });
+    await api
+      .get(`/task/filter/late/11:11:11:11:11:11`)
+      .then((response) => {
+        if (response.data) {
+          const numberOfLateTasks = response.data.length;
+          setLateTasksNumber(numberOfLateTasks);
+        }
+      })
+      .catch(() => {
+        toast.error(
+          "Um erro ocorreu ao selecionar as tarefas atrasadas. Tente novamente.",
+          {
+            style: { background: "#f04141", color: "#fff" },
+            duration: 3000,
+          }
+        );
+      });
   }, []);
 
-  const createTask = async (task: Partial<ITasks>) => {
+  const createTask = useCallback(async (task: Partial<ITasks>) => {
     await api
       .post("/task", task)
       .then((response) => {
@@ -65,28 +81,122 @@ export const TasksContextProvider: React.FC = ({ children }) => {
           });
         }
       })
-      .catch((error) => {
-        toast.error("Teste", {
+      .catch(() => {
+        toast.error(
+          "Um erro ocorreu ao tentar criar está tarefa. Tente novamente.",
+          {
+            style: { background: "#f04141", color: "#fff" },
+            duration: 3000,
+          }
+        );
+      });
+  }, []);
+
+  const loadTask = useCallback(async (_id: string) => {
+    if (_id) {
+      await api
+        .get(`/task/${_id}`)
+        .then((response) => {
+          if (response.data) {
+            setTask(response.data);
+          }
+        })
+        .catch(() => {
+          toast.error(
+            "Um erro ocorreu ao selecionar as tarefas atrasadas. Tente novamente.",
+            {
+              style: { background: "#f04141", color: "#fff" },
+              duration: 3000,
+            }
+          );
+        });
+    } else {
+      setTask(null);
+    }
+  }, []);
+
+  const updateTask = useCallback(async (task: Partial<ITasks>, _id: string) => {
+    if (_id) {
+      await api
+        .put(`/task/${_id}`, task)
+        .then((response) => {
+          if (response.data) {
+            toast.success(response.data.message, {
+              style: { background: "#4E41F0", color: "#fff" },
+              duration: 3000,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error(
+            "Um erro ocorreu ao atualizar está tarefa. Tente novamente.",
+            {
+              style: { background: "#f04141", color: "#fff" },
+              duration: 3000,
+            }
+          );
+        });
+    } else {
+      toast.error(
+        "Id não informado ou inexistente, recarrega a página. Tente novamente.",
+        {
           style: { background: "#f04141", color: "#fff" },
           duration: 3000,
+        }
+      );
+    }
+  }, []);
+
+  const deleteTask = useCallback(async (_id: string) => {
+    if (_id) {
+      await api
+        .delete(`/task/${_id}`)
+        .then((response) => {
+          if (response.data) {
+            toast.success(response.data.message, {
+              style: { background: "#4E41F0", color: "#fff" },
+              duration: 3000,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error(
+            "Um erro ocorreu ao deletar está tarefa. Tente novamente.",
+            {
+              style: { background: "#f04141", color: "#fff" },
+              duration: 3000,
+            }
+          );
         });
-      });
-  };
+    } else {
+      toast.error(
+        "Id não informado ou inexistente, recarrega a página. Tente novamente.",
+        {
+          style: { background: "#f04141", color: "#fff" },
+          duration: 3000,
+        }
+      );
+    }
+  }, []);
 
   useEffect(() => {
     getTasks();
-  }, [selectedFilter, getTasks]);
+  }, [selectedFilter, getTasks, updateTask]);
 
   return (
     <TasksContext.Provider
       value={{
         tasks,
+        task,
         selectedFilter,
         changeTasksFilter,
         getTasks,
         checkLateTasks,
         lateTasksNumber,
         createTask,
+        loadTask,
+        updateTask,
+        deleteTask,
       }}
     >
       <>

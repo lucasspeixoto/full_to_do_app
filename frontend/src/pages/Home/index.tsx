@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import FilterCard from "@components/pages/FilterCard";
 import TaskCard from "@components/pages/TaskCard";
@@ -18,7 +18,11 @@ const filters = [
 ];
 
 const Home: React.FC = () => {
-  const { tasks, selectedFilter, changeTasksFilter } = useTasks();
+  const { getTasks, tasks, selectedFilter, changeTasksFilter } = useTasks();
+
+  useEffect(() => {
+    getTasks();
+  }, [getTasks]);
 
   return (
     <React.Fragment>

@@ -33,7 +33,7 @@ class TaskController {
     await task
       .save()
       .then((response) => {
-        res.status(201).json({message: 'Tarefa Cadastrada com sucesso!'});
+        res.status(201).json({ message: "Tarefa Cadastrada com sucesso!" });
       })
       .catch(() => {
         const error = new HttpError(
@@ -53,7 +53,9 @@ class TaskController {
       useFindAndModify: false,
     })
       .then((response) => {
-        return res.status(200).json(response);
+        return res
+          .status(200)
+          .json({ message: "Tarefa Atualizada com sucesso!" });
       })
       .catch(() => {
         const error = new HttpError(
@@ -89,7 +91,7 @@ class TaskController {
 
     await TaskModel.deleteOne({ _id: taskId })
       .then((response) => {
-        return res.status(200).json(response);
+        return res.status(200).json({ message: "Tarefa Deletada com sucesso!" });
       })
       .catch(() => {
         const error = new HttpError(

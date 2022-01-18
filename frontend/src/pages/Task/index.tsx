@@ -1,11 +1,15 @@
 //* React
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+
+//* Bibliotecas externas
+import { useParams, Navigate } from "react-router-dom";
+import { format } from "date-fns";
 
 //* Styles
 import * as S from "./styles";
 
 //* Forms
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 
 //* Components externos
@@ -43,8 +47,8 @@ const initialValues = {
 const schema = Yup.object()
   .shape({
     done: Yup.boolean(),
-    title: Yup.string().required(Messages.required).min(5, Messages.min),
-    description: Yup.string().required(Messages.required),
+    title: Yup.string().required(Messages.required).min(3, Messages.min),
+    description: Yup.string().required(Messages.required).min(5, Messages.min),
     date: Yup.string().required(Messages.required),
     hour: Yup.string().required(Messages.required),
   })
@@ -52,10 +56,59 @@ const schema = Yup.object()
 
 const Task: React.FC<any> = () => {
   const [type, setType] = useState<number>(null);
+  const { _id } = useParams();
+  const [redirect, setRedirect] = useState(false);
+  const { createTask, loadTask, task, updateTask, getTasks, deleteTask } =
+    useTasks();
 
-  const { createTask } = useTasks();
+  const createTaskHandler = async (values: ITasksForm) => {
+    const newTask = {
+      done: values.done,
+      macaddress: "11:11:11:11:11:11",
+      type: type,
+      title: values.title,
+      description: values.description,
+      when: `${values.date}T${values.hour}:00.000`,
+    };
+    await createTask(newTask);
 
-  const save = (values: ITasksForm, actions: any) => {
+    await getTasks();
+
+    setType(null);
+
+    setRedirect(true);
+  };
+
+  const updateTaskHandler = useCallback(
+    async (values: ITasksForm) => {
+      const newTask = {
+        done: values.done,
+        macaddress: "11:11:11:11:11:11",
+        type: type,
+        title: values.title,
+        description: values.description,
+        when: `${values.date}T${values.hour}:00.000`,
+      };
+      await updateTask(newTask, _id);
+
+      setType(null);
+
+      setRedirect(true);
+    },
+    [_id, type, updateTask]
+  );
+
+  const deleteTaskHandler = async () => {
+    if (_id) {
+      await deleteTask(_id);
+      setRedirect(true);
+    }
+  };
+
+  const submitHandler = async (
+    values: ITasksForm,
+    actions: FormikHelpers<ITasksForm>
+  ) => {
     if (!type) {
       toast.error("Selecione um Tipo!", {
         duration: 3000,
@@ -65,26 +118,28 @@ const Task: React.FC<any> = () => {
       return;
     }
 
-    const newTask = {
-      done: values.done,
-      macaddress: "11:11:11:11:11:11",
-      type: type,
-      title: values.title,
-      description: values.description,
-      when: `${values.date}T${values.hour}:00.000`,
-    };
-
-    console.log(newTask);
-
-    createTask(newTask);
-
+    //* Verificar se é create ou update de tarefa
+    if (_id) {
+      await updateTaskHandler(values);
+    } else {
+      await createTaskHandler(values);
+    }
     actions.resetForm();
-
-    setType(null);
   };
+
+  //* Buscar dados da tarefa para a rota de edição
+  useEffect(() => {
+    if (_id) loadTask(_id);
+  }, [_id, loadTask]);
+
+  //* Atualizar tipo da tarefa para a rota de edição
+  useEffect(() => {
+    if (task) setType(task.type);
+  }, [task]);
 
   return (
     <React.Fragment>
+      {redirect && <Navigate to='/' />}
       <Header />
       <S.Container>
         <Toaster position='top-right' reverseOrder={false}>
@@ -102,9 +157,20 @@ const Task: React.FC<any> = () => {
         </Toaster>
 
         <Formik
-          onSubmit={save}
-          initialValues={initialValues}
+          onSubmit={submitHandler}
+          initialValues={
+            _id && task
+              ? {
+                  done: task?.done,
+                  title: task?.title,
+                  description: task?.description,
+                  date: format(new Date(task?.when), "yyyy-MM-dd"),
+                  hour: format(new Date(task?.when), "HH:mm"),
+                }
+              : initialValues
+          }
           validationSchema={schema}
+          enableReinitialize
         >
           {({ isValid, isSubmitting }) => (
             <S.FormArea>
@@ -206,7 +272,9 @@ const Task: React.FC<any> = () => {
                     <span>Concluído</span>
                   </div>
 
-                  <button type='button'>Excluir</button>
+                  <button type='button' onClick={deleteTaskHandler}>
+                    Excluir
+                  </button>
                 </S.Options>
 
                 <S.SendArea>
