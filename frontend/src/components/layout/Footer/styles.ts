@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 100%;
   height: 40px;
   background: ${(props) => props.theme.colors.tertiary};
-  border-top: 5px solid ${(props) => props.theme.colors.orange};
+  border-top: 3px solid ${(props) => props.theme.colors.orange};
 
   position: fixed;
 

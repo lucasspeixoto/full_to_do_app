@@ -1,4 +1,10 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 
 import useLocalStorage from "@core/hooks/useLocalStorage";
 import { ITasks } from "@core/types/tasks";
@@ -20,11 +26,15 @@ export interface TasksContextType {
   deleteTask(_id: string): Promise<void>;
 }
 
-const lastFilter = localStorage.getItem("@todo:selectedFilter");
-
 export const TasksContext = createContext({} as TasksContextType);
 
 export const TasksContextProvider: React.FC = ({ children }) => {
+  const lastFilter = useMemo(() => {
+    return localStorage.getItem("@todo:selectedFilter");
+  }, []);
+
+  const macaddress = localStorage.getItem("@todo:macaddress");
+
   const [selectedFilter, setSelectedFilter] = useLocalStorage<string>(
     "@todo:selectedFilter",
     lastFilter ? lastFilter : "mytasks"
@@ -37,22 +47,21 @@ export const TasksContextProvider: React.FC = ({ children }) => {
   const changeTasksFilter = useCallback(
     (filter: string) => {
       setSelectedFilter(filter);
-      localStorage.setItem("@todo:selectedFilter", filter);
     },
     [setSelectedFilter]
   );
 
   const getTasks = useCallback(async () => {
     await api
-      .get(`/task/filter/${selectedFilter}/11:11:11:11:11:11`)
+      .get(`/task/filter/${selectedFilter}/${macaddress}`)
       .then((response) => {
         setTasks(response.data);
       });
-  }, [selectedFilter]);
+  }, [selectedFilter, macaddress]);
 
   const checkLateTasks = useCallback(async () => {
     await api
-      .get(`/task/filter/late/11:11:11:11:11:11`)
+      .get(`/task/filter/late/${macaddress}`)
       .then((response) => {
         if (response.data) {
           const numberOfLateTasks = response.data.length;
@@ -68,7 +77,7 @@ export const TasksContextProvider: React.FC = ({ children }) => {
           }
         );
       });
-  }, []);
+  }, [macaddress]);
 
   const createTask = useCallback(async (task: Partial<ITasks>) => {
     await api

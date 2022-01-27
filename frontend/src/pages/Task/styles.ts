@@ -6,9 +6,17 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  
-  padding-top: 10px;
-  padding-bottom: 10px;
+`;
+
+export const Content = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  flex-direction: column;
+
+  margin-top: 10px;
+  margin-bottom: 50px;
 `;
 
 export const FormArea = styled.div`
@@ -19,8 +27,7 @@ export const IconsArea = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  
-  
+
   margin-bottom: 10px;
 
   .inative {
@@ -43,7 +50,7 @@ export const IconsArea = styled.div`
     height: 50px;
     cursor: pointer;
     opacity: 0.5;
-    
+
     &:hover {
       opacity: 1;
     }
@@ -54,12 +61,12 @@ export const FormField = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 
   span {
     font-size: 18px;
     color: ${(props) => props.theme.colors.white};
-    margin-bottom: 5px;
+    margin-bottom: 3px;
   }
 
   img {
@@ -116,12 +123,12 @@ export const SendArea = styled.div`
     border-radius: 10px;
 
     &:hover {
-      opacity: .7;
+      opacity: 0.7;
     }
 
     &:disabled {
-      opacity: .5;
+      opacity: 0.5;
       cursor: not-allowed;
     }
   }
-`
+`;
